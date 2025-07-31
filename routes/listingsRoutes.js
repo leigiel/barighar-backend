@@ -1,11 +1,10 @@
-const express = require('express');
+import express from 'express';
+import { getListings, createListing } from '../controllers/listingControllers.js';
+import upload from '../middleware/uploadMiddleware.js';
+
 const router = express.Router();
-const {
-  getListings,
-  createListing
-} = require('../controllers/listingControllers');
 
-router.get('/', getListings);       // GET /api/listings
-router.post('/', createListing);    // POST /api/listings
+router.get('/', getListings);
+router.post('/', upload.single('image'), createListing);  // multer handles 'image' field
 
-module.exports = router;
+export default router;
